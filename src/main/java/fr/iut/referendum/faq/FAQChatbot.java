@@ -31,6 +31,10 @@ public class FAQChatbot {
             "Pour voir les résultats :\n1. Sélectionnez un référendum terminé\n2. Cliquez sur 'Résultat'\n\nNote: Les résultats ne sont disponibles qu'après la clôture du référendum."
         ));
         employeeFAQ.add(new FAQEntry(
+            new String[]{"pourquoi je ne peux pas voir résultat", "pas de résultat", "résultat indisponible", "pourquoi pas résultat", "résultat impossible", "voir résultat impossible"},
+            "Vous ne pouvez pas voir les résultats car :\n- Le référendum est encore OUVERT (vote en cours)\n- Le référendum est FERMÉ (pas encore commencé)\n\nLes résultats sont disponibles UNIQUEMENT quand le référendum est TERMINÉ (après la date de fin)."
+        ));
+        employeeFAQ.add(new FAQEntry(
             new String[]{"connexion", "connecter", "login", "se connecter", "comment se connecter", "identifiant", "mot de passe", "probleme connexion", "je n'arrive pas à me connecter", "connexion impossible", "mdp", "password"},
             "Pour vous connecter :\n1. Entrez votre identifiant\n2. Entrez votre mot de passe\n3. Cliquez sur 'Se connecter'\n\nEn cas de problème, contactez votre administrateur."
         ));
@@ -41,6 +45,10 @@ public class FAQChatbot {
         employeeFAQ.add(new FAQEntry(
             new String[]{"déjà voté", "voter deux fois", "double vote", "deja vote", "j'ai déjà voté", "voter encore", "revoter", "changer mon vote", "modifier vote", "annuler vote", "vote multiple"},
             "Vous ne pouvez voter qu'une seule fois par référendum. Si vous avez déjà voté, le système affichera 'Vous avez déjà voté pour ce référendum'."
+        ));
+        employeeFAQ.add(new FAQEntry(
+            new String[]{"pourquoi je ne peux pas voter", "pas voter", "vote impossible", "voter impossible", "ne peux pas voter", "impossible de voter", "vote refusé", "voter refusé"},
+            "Vous ne pouvez pas voter pour plusieurs raisons possibles :\n1. Le référendum est FERMÉ (pas encore ouvert)\n2. Le référendum est TERMINÉ (date dépassée)\n3. Vous avez DÉJÀ VOTÉ pour ce référendum\n\nVérifiez le statut du référendum et si vous n'avez pas déjà voté."
         ));
         employeeFAQ.add(new FAQEntry(
             new String[]{"sécurité", "vote sécurisé", "cryptage", "securite", "securise", "sécurisé", "anonyme", "confidentiel", "protection", "chiffrement", "ssl", "tls", "mon vote est il sécurisé", "mon vote est-il sécurisé", "vote est sécurisé", "est il sécurisé", "est-il sécurisé", "vie privée", "confidentialité", "vote securise", "est ce que mon vote", "est-ce que mon vote"},
