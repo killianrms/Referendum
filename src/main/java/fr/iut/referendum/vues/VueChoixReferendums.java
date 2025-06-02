@@ -19,7 +19,7 @@ public class VueChoixReferendums extends BorderPane {
     @FXML
     private ListView<String> listViewReferendums;
     @FXML
-    private Button buttonSelect, buttonReload, buttonResultat, buttonAdmin, buttonCGU, buttonML;
+    private Button buttonSelect, buttonReload, buttonResultat, buttonAdmin, buttonCGU, buttonML, buttonFAQ;
     @FXML
     private Label labelClient, statue;
     @FXML
@@ -94,6 +94,9 @@ public class VueChoixReferendums extends BorderPane {
         buttonML.setOnMouseClicked(mouseEvent -> {
             vueML();
         });
+        buttonFAQ.setOnMouseClicked(mouseEvent -> {
+            vueFAQ();
+        });
 
         loadReferendums();
     }
@@ -131,6 +134,27 @@ public class VueChoixReferendums extends BorderPane {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("Mentions légales");
+        stage.show();
+    }
+
+    private void vueFAQ() {
+        String role = "EMPLOYE";
+        try {
+            writer.println("CLIENT_EST_ADMIN");
+            writer.println(login);
+            if (reader.readLine().equals("true")) {
+                role = "ADMIN";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        Scene scene = new Scene(new VueFAQChatbot(role, login));
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("FAQ - Assistant");
+        stage.setWidth(600);
+        stage.setHeight(700);
         stage.show();
     }
 

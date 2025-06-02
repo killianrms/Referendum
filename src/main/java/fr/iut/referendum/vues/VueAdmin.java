@@ -17,7 +17,7 @@ public class VueAdmin extends BorderPane {
     @FXML
     private Label label, statue;
     @FXML
-    private Button buttonCreerReferendum, buttonSuprReferendum, buttonReload, buttonGererScrutateur, buttonGererClient, buttonRetour;
+    private Button buttonCreerReferendum, buttonSuprReferendum, buttonReload, buttonGererScrutateur, buttonGererClient, buttonRetour, buttonFAQ;
     @FXML
     private TextField nomReferendum, heureFin;
     @FXML
@@ -81,6 +81,10 @@ public class VueAdmin extends BorderPane {
             vueChoixReferendum();
         });
 
+        buttonFAQ.setOnMouseClicked(mouseEvent -> {
+            vueFAQ();
+        });
+
         loadReferendums();
         loadScrutateur();
     }
@@ -116,6 +120,16 @@ public class VueAdmin extends BorderPane {
         stage.show();
         Stage currentStage = (Stage) buttonGererClient.getScene().getWindow();
         currentStage.close();
+    }
+
+    private void vueFAQ() {
+        Scene scene = new Scene(new VueFAQChatbot("ADMIN", login));
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("FAQ - Assistant Administrateur");
+        stage.setWidth(600);
+        stage.setHeight(700);
+        stage.show();
     }
 
     private void supprimerReferendum() throws IOException {

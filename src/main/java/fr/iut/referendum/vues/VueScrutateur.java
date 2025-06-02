@@ -26,7 +26,7 @@ public class VueScrutateur extends BorderPane {
     @FXML
     private Label labelClient,statue,labelfichier;
     @FXML
-    private Button buttonNewFile, buttonEnvoyer, buttonResultat, buttonReload, buttonLoadFile, buttonCGU, buttonML;
+    private Button buttonNewFile, buttonEnvoyer, buttonResultat, buttonReload, buttonLoadFile, buttonCGU, buttonML, buttonFAQ;
     @FXML
     private TextField nomfichier;
     @FXML
@@ -95,6 +95,9 @@ public class VueScrutateur extends BorderPane {
         buttonML.setOnMouseClicked(mouseEvent -> {
             vueML();
         });
+        buttonFAQ.setOnMouseClicked(mouseEvent -> {
+            vueFAQ();
+        });
     }
 
     private void vueCGU() {
@@ -130,6 +133,16 @@ public class VueScrutateur extends BorderPane {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("Mentions légales");
+        stage.show();
+    }
+
+    private void vueFAQ() {
+        Scene scene = new Scene(new VueFAQChatbot("SCRUTATEUR", login));
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("FAQ - Assistant Scrutateur");
+        stage.setWidth(600);
+        stage.setHeight(700);
         stage.show();
     }
 

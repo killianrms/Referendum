@@ -108,3 +108,8 @@ local.properties
 
 nbproject/private/
 build/
+
+# Claude Code files
+CLAUDE.md
+.claude/
+.claude*
