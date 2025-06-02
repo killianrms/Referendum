@@ -114,6 +114,10 @@ public class FAQChatbot {
             new String[]{"retour votant", "section votant", "quitter admin"},
             "Pour retourner à la section votant, cliquez sur 'Retour'. Vous pourrez toujours revenir à la section admin plus tard."
         ));
+        adminFAQ.add(new FAQEntry(
+            new String[]{"voter", "comment voter", "vote admin", "admin vote", "puis-je voter"},
+            "En tant qu'administrateur, vous pouvez aussi voter ! Pour cela :\n1. Cliquez sur 'Retour' pour quitter la section admin\n2. Vous serez dans la vue employé normale\n3. Suivez la procédure de vote habituelle\n\nVous gardez vos droits admin et pouvez y retourner via 'Section administrateur'."
+        ));
         faqDatabase.put("ADMIN", adminFAQ);
         
         // Questions communes à tous

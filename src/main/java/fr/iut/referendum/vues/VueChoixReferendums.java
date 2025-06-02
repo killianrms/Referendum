@@ -138,16 +138,8 @@ public class VueChoixReferendums extends BorderPane {
     }
 
     private void vueFAQ() {
+        // Dans la vue choix référendums, même un admin est d'abord un employé/votant
         String role = "EMPLOYE";
-        try {
-            writer.println("CLIENT_EST_ADMIN");
-            writer.println(login);
-            if (reader.readLine().equals("true")) {
-                role = "ADMIN";
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         
         Scene scene = new Scene(new VueFAQChatbot(role, login));
         Stage stage = new Stage();
