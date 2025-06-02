@@ -66,6 +66,14 @@
                     <Button fx:id="buttonGererClient" text="Gérer Client" />
                 </children>
             </HBox>
+            <HBox alignment="CENTER" prefHeight="40.0" spacing="10.0">
+                <children>
+                    <Button fx:id="buttonFAQ" mnemonicParsing="false" text="FAQ / Aide" style="-fx-background-color: #28a745; -fx-text-fill: white;" />
+                </children>
+                <padding>
+                    <Insets bottom="10.0" />
+                </padding>
+            </HBox>
         </VBox>
     </bottom>
 </fx:root>
