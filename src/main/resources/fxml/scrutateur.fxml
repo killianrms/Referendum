@@ -49,6 +49,7 @@
             <Separator prefWidth="200.0" />
             <HBox fx:id="hboxBas" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="200.0" spacing="10.0">
                 <children>
+                    <Button fx:id="buttonFAQ" mnemonicParsing="false" text="FAQ / Aide" style="-fx-background-color: #28a745; -fx-text-fill: white;" />
                     <Button fx:id="buttonCGU" mnemonicParsing="false" text="CGU" />
                     <Button fx:id="buttonML" mnemonicParsing="false" text="Mentions Légales" />
                 </children>

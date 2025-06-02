@@ -19,7 +19,7 @@ public class VueChoixReferendums extends BorderPane {
     @FXML
     private ListView<String> listViewReferendums;
     @FXML
-    private Button buttonSelect, buttonReload, buttonResultat, buttonAdmin, buttonCGU, buttonML;
+    private Button buttonSelect, buttonReload, buttonResultat, buttonAdmin, buttonCGU, buttonML, buttonFAQ;
     @FXML
     private Label labelClient, statue;
     @FXML
@@ -94,6 +94,9 @@ public class VueChoixReferendums extends BorderPane {
         buttonML.setOnMouseClicked(mouseEvent -> {
             vueML();
         });
+        buttonFAQ.setOnMouseClicked(mouseEvent -> {
+            vueFAQ();
+        });
 
         loadReferendums();
     }
@@ -131,6 +134,19 @@ public class VueChoixReferendums extends BorderPane {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("Mentions légales");
+        stage.show();
+    }
+
+    private void vueFAQ() {
+        // Dans la vue choix référendums, même un admin est d'abord un employé/votant
+        String role = "EMPLOYE";
+        
+        Scene scene = new Scene(new VueFAQChatbot(role, login));
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("FAQ - Assistant");
+        stage.setWidth(600);
+        stage.setHeight(700);
         stage.show();
     }
 
