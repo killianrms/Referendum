@@ -10,12 +10,12 @@ public class FAQChatbot {
     
     private Map<String, List<FAQEntry>> faqDatabase;
     private String userRole;
-    private GeminiService geminiService;
+    private DeepSeekService deepSeekService;
     
     public FAQChatbot(String userRole) {
         this.userRole = userRole;
         this.faqDatabase = new HashMap<>();
-        this.geminiService = new GeminiService();
+        this.deepSeekService = new DeepSeekService();
         initializeFAQDatabase();
     }
     
@@ -164,15 +164,15 @@ public class FAQChatbot {
             return response;
         }
         
-        // Si aucune réponse trouvée, utiliser Gemini
+        // Si aucune réponse trouvée, utiliser DeepSeek
         try {
-            String geminiResponse = geminiService.askGemini(query, userRole);
-            if (geminiResponse != null && !geminiResponse.isEmpty()) {
-                return geminiResponse;
+            String deepSeekResponse = deepSeekService.askDeepSeek(query, userRole);
+            if (deepSeekResponse != null && !deepSeekResponse.isEmpty()) {
+                return deepSeekResponse;
             }
         } catch (Exception e) {
-            // En cas d'erreur avec Gemini, continuer avec la réponse par défaut
-            System.err.println("Erreur Gemini (ignorée): " + e.getMessage());
+            // En cas d'erreur avec DeepSeek, continuer avec la réponse par défaut
+            System.err.println("Erreur DeepSeek (ignorée): " + e.getMessage());
         }
         
         // Réponse par défaut avec suggestions
