@@ -165,9 +165,14 @@ public class FAQChatbot {
         }
         
         // Si aucune réponse trouvée, utiliser Gemini
-        String geminiResponse = geminiService.askGemini(query, userRole);
-        if (geminiResponse != null && !geminiResponse.isEmpty()) {
-            return geminiResponse;
+        try {
+            String geminiResponse = geminiService.askGemini(query, userRole);
+            if (geminiResponse != null && !geminiResponse.isEmpty()) {
+                return geminiResponse;
+            }
+        } catch (Exception e) {
+            // En cas d'erreur avec Gemini, continuer avec la réponse par défaut
+            System.err.println("Erreur Gemini (ignorée): " + e.getMessage());
         }
         
         // Réponse par défaut avec suggestions

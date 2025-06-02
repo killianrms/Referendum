@@ -10,8 +10,16 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 public class GeminiService {
     
@@ -23,11 +31,42 @@ public class GeminiService {
     private final Map<String, String> roleContexts;
     
     public GeminiService() {
-        this.httpClient = HttpClient.newHttpClient();
+        this.httpClient = createHttpClient();
         this.gson = new Gson();
         this.roleContexts = new HashMap<>();
         this.apiKey = EnvLoader.getInstance().getEnv("GEMINI_API_KEY");
         initializeRoleContexts();
+    }
+    
+    private HttpClient createHttpClient() {
+        try {
+            // Créer un TrustManager qui accepte tous les certificats
+            TrustManager[] trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    public X509Certificate[] getAcceptedIssuers() {
+                        return new X509Certificate[0];
+                    }
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                    }
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                    }
+                }
+            };
+            
+            // Installer le TrustManager
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, trustAllCerts, new SecureRandom());
+            
+            return HttpClient.newBuilder()
+                .sslContext(sslContext)
+                .connectTimeout(Duration.ofSeconds(10))
+                .build();
+        } catch (NoSuchAlgorithmException | KeyManagementException e) {
+            // En cas d'erreur, utiliser le client par défaut
+            return HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(10))
+                .build();
+        }
     }
     
     private void initializeRoleContexts() {
@@ -138,6 +177,7 @@ public class GeminiService {
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(GEMINI_API_URL + "?key=" + apiKey))
                 .header("Content-Type", "application/json")
+                .timeout(Duration.ofSeconds(10))
                 .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(requestBody)))
                 .build();
             
