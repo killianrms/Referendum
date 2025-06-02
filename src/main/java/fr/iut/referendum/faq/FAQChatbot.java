@@ -43,7 +43,7 @@ public class FAQChatbot {
             "Vous ne pouvez voter qu'une seule fois par référendum. Si vous avez déjà voté, le système affichera 'Vous avez déjà voté pour ce référendum'."
         ));
         employeeFAQ.add(new FAQEntry(
-            new String[]{"sécurité", "vote sécurisé", "cryptage", "securite", "securise", "anonyme", "confidentiel", "protection", "chiffrement", "ssl", "tls", "mon vote est-il sécurisé", "vie privée", "confidentialité"},
+            new String[]{"sécurité", "vote sécurisé", "cryptage", "securite", "securise", "sécurisé", "anonyme", "confidentiel", "protection", "chiffrement", "ssl", "tls", "mon vote est il sécurisé", "mon vote est-il sécurisé", "vote est sécurisé", "est il sécurisé", "est-il sécurisé", "vie privée", "confidentialité", "vote securise", "est ce que mon vote", "est-ce que mon vote"},
             "Votre vote est sécurisé par :\n- Connexion SSL/TLS chiffrée\n- Cryptage homomorphe du vote\n- Anonymisation du vote\n- Impossibilité de relier un vote à un votant"
         ));
         employeeFAQ.add(new FAQEntry(
@@ -205,16 +205,30 @@ public class FAQChatbot {
             // Correspondance exacte du mot-clé
             if (query.contains(keyword)) {
                 score += 10;
+                continue; // Éviter de compter deux fois
             }
             
             // Correspondance partielle
             for (String queryWord : queryWords) {
-                if (queryWord.length() >= 3 && keyword.contains(queryWord)) {
+                // Ignorer les mots trop courts sauf pour des mots importants
+                if (queryWord.length() < 3 && !queryWord.equals("il") && !queryWord.equals("est")) {
+                    continue;
+                }
+                
+                // Correspondance exacte du mot
+                if (queryWord.equals(keyword)) {
+                    score += 8;
+                } else if (keyword.contains(queryWord)) {
                     score += 5;
-                } else if (queryWord.length() >= 3 && queryWord.contains(keyword)) {
+                } else if (queryWord.contains(keyword) && keyword.length() >= 3) {
                     score += 5;
-                } else if (levenshteinDistance(queryWord, keyword) <= 2 && queryWord.length() >= 3) {
-                    score += 3;
+                } else if (queryWord.length() >= 3 && keyword.length() >= 3) {
+                    int distance = levenshteinDistance(queryWord, keyword);
+                    if (distance == 1) {
+                        score += 4;
+                    } else if (distance == 2) {
+                        score += 2;
+                    }
                 }
             }
         }
