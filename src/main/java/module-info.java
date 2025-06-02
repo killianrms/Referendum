@@ -6,4 +6,6 @@ open module referendum {
     requires java.sql;
     requires jbcrypt;
     requires java.dotenv;
+    requires com.google.gson;
+    requires java.net.http;
 }

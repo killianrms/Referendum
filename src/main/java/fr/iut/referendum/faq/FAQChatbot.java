@@ -10,10 +10,12 @@ public class FAQChatbot {
     
     private Map<String, List<FAQEntry>> faqDatabase;
     private String userRole;
+    private GeminiService geminiService;
     
     public FAQChatbot(String userRole) {
         this.userRole = userRole;
         this.faqDatabase = new HashMap<>();
+        this.geminiService = new GeminiService();
         initializeFAQDatabase();
     }
     
@@ -156,6 +158,12 @@ public class FAQChatbot {
         response = searchInFAQ(faqDatabase.get("COMMON"), lowerQuery);
         if (response != null) {
             return response;
+        }
+        
+        // Si aucune réponse trouvée, utiliser Gemini
+        String geminiResponse = geminiService.askGemini(query, userRole);
+        if (geminiResponse != null && !geminiResponse.isEmpty()) {
+            return geminiResponse;
         }
         
         // Réponse par défaut avec suggestions
