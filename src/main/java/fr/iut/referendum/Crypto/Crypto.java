@@ -87,7 +87,7 @@ public abstract class Crypto {
         rep[mj] = new BigInteger(q.bitLength(), random).mod(q);
 
         A[mj] = ((g.modPow(rep[mj], p)).multiply(c1.modPow(chall[mj], p))).mod(p);
-        B[mj] = ((h.modPow(rep[mj], p)).multiply((c2.multiply(g.modInverse(p))).modPow(chall[mj], p))).mod(p);
+        B[mj] = h.modPow(rep[mj], p).multiply(c2.multiply(g.modPow(BigInteger.valueOf(mj), p).modInverse(p)).mod(p).modPow(chall[mj], p)).mod(p);
 
         // True value
         BigInteger w = new BigInteger(q.bitLength(), random).mod(q);

@@ -382,14 +382,13 @@ public class ServerThread extends Thread {
         // Enregistrement du vote
         BigInteger c1 = new BigInteger(reader.readLine());
         BigInteger c2 = new BigInteger(reader.readLine());
-        BigInteger[] c = new BigInteger[]{c1, c2}; // choix crypté
-
         //ZKProof
         BigInteger chall0 = new BigInteger(reader.readLine());
         BigInteger rep0 = new BigInteger(reader.readLine());
         BigInteger chall1 = new BigInteger(reader.readLine());
         BigInteger rep1 = new BigInteger(reader.readLine());
 
+        BigInteger[] c = new BigInteger[]{c1, c2}; // choix crypté
         BigInteger[] pi = {chall0, rep0, chall1, rep1};
 
         try {
