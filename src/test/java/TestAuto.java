@@ -205,7 +205,6 @@ public class TestAuto extends ApplicationTest {
 
         if (voteBourrageUrne != 0) {
             MainClient clientApp = new MainClient();
-            clientApp.setVoteBourrageUrne(voteBourrageUrne);
 
             Platform.runLater(() -> {
                 primaryStageReference.close();
@@ -216,6 +215,8 @@ public class TestAuto extends ApplicationTest {
             connection("ClientTestAuto5", "ClientTestAuto123.");
 
             sleep(500);
+
+            clientApp.setVoteBourrageUrne(voteBourrageUrne);
 
             Button buttonReload3 = lookup("#buttonReload").queryAs(Button.class);
             clickOn(buttonReload3);
@@ -401,7 +402,7 @@ public class TestAuto extends ApplicationTest {
         );
     }
 
-    @ParameterizedTest(name = "{index} - Vote {0} => Résultat attendu : {1}")
+    @ParameterizedTest(name = "{index} - Vote {0} ; Avec BourrageUrne {1} => Résultat attendu : {2}")
     @MethodSource("voteReferendumBourrageUrneTestCases")
     void TestReferendumBourrageUrne(
             Boolean[] voteAFaire,
@@ -433,10 +434,10 @@ public class TestAuto extends ApplicationTest {
 
     private static Stream<Arguments> voteReferendumBourrageUrneTestCases() {
         return Stream.of(
-                Arguments.of(new Boolean[]{true, false}, 10, "Erreur"),
-                Arguments.of(new Boolean[]{true, false}, -10, "Erreur"),
-                Arguments.of(new Boolean[]{false, false}, 3, "Erreur"),
-                Arguments.of(new Boolean[]{true, true}, -2, "Erreur")
+                Arguments.of(new Boolean[]{true, false}, 10, "Egalité"),
+                Arguments.of(new Boolean[]{true, false}, -10, "Egalité"),
+                Arguments.of(new Boolean[]{false, false}, 3, "Non"),
+                Arguments.of(new Boolean[]{true, true}, -2, "Oui")
         );
     }
 

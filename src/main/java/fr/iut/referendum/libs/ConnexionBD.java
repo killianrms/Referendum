@@ -20,7 +20,7 @@ public class ConnexionBD {
         try {
             cn = DriverManager.getConnection(instanceEnv.getEnv("dburl"),instanceEnv.getEnv("dblogin"),instanceEnv.getEnv("dbpassword"));
         } catch (Exception e) {
-            throw new RuntimeException("Pas de connexion");
+            throw new RuntimeException("Problème de connexion à la base de données", e);
         }
     }
 
