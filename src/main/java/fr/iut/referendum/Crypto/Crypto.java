@@ -75,20 +75,22 @@ public abstract class Crypto {
         int mi = m.intValue();
         int mj = 1 - m.intValue();
 
+        BigInteger q = p.subtract(BigInteger.ONE).divide(BigInteger.TWO);
+
         // False value
         BigInteger[] A = new BigInteger[2];
         BigInteger[] B = new BigInteger[2];
         BigInteger[] chall = new BigInteger[2];
         BigInteger[] rep = new BigInteger[2];
 
-        chall[mj] = new BigInteger(p.bitLength(), random).mod(p);
-        rep[mj] = new BigInteger(p.bitLength(), random).mod(p);
+        chall[mj] = new BigInteger(q.bitLength(), random).mod(q);
+        rep[mj] = new BigInteger(q.bitLength(), random).mod(q);
 
         A[mj] = ((g.modPow(rep[mj], p)).multiply(c1.modPow(chall[mj], p))).mod(p);
         B[mj] = ((h.modPow(rep[mj], p)).multiply((c2.multiply(g.modInverse(p))).modPow(chall[mj], p))).mod(p);
 
         // True value
-        BigInteger w = new BigInteger(p.bitLength(), random);
+        BigInteger w = new BigInteger(q.bitLength(), random).mod(q);
         A[mi] = g.modPow(w, p);
         B[mi] = h.modPow(w, p);
 
@@ -103,8 +105,8 @@ public abstract class Crypto {
         byte[] hashBytes = md.digest();
         BigInteger hashInt = new BigInteger(1, hashBytes).mod(p); // e
 
-        chall[mi] = hashInt.subtract(chall[mj]).mod(p);
-        rep[mi] = w.subtract(chall[mj].multiply(r).mod(p)).mod(p);
+        chall[mi] = hashInt.subtract(chall[mj]).mod(q);
+        rep[mi] = w.subtract(chall[mj].multiply(r).mod(q)).mod(q);
 
         return new BigInteger[]{chall[0], rep[0], chall[1], rep[1]};
     }
@@ -121,6 +123,8 @@ public abstract class Crypto {
         BigInteger chall1 = pi[2];
         BigInteger rep1 = pi[3];
 
+        BigInteger q = p.subtract(BigInteger.ONE).divide(BigInteger.TWO);
+
         BigInteger A0 = (g.modPow(rep0, p)).multiply(c1.modPow(chall0, p)).mod(p);
         BigInteger A1 = (g.modPow(rep1, p)).multiply(c1.modPow(chall1, p)).mod(p);
         BigInteger B0 = (h.modPow(rep0, p)).multiply(c2.modPow(chall0, p)).mod(p);
@@ -134,10 +138,10 @@ public abstract class Crypto {
             md.update(b);
         }
 
-        BigInteger verif = chall0.add(chall1).mod(p);
+        BigInteger verif = chall0.add(chall1).mod(q);
 
         byte[] hashBytes = md.digest();
-        BigInteger result = new BigInteger(1, hashBytes).mod(p);
+        BigInteger result = new BigInteger(1, hashBytes).mod(q);
 
         return result.equals(verif);
     }
