@@ -9,48 +9,55 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.effect.DropShadow?>
 
-<fx:root prefHeight="625.0" prefWidth="805.0" type="BorderPane" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+<fx:root prefHeight="650.0" prefWidth="800.0" type="BorderPane" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
     <top>
-        <VBox BorderPane.alignment="CENTER">
-            <Button fx:id="buttonRetour" mnemonicParsing="false" text="Retour">
+        <VBox style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" BorderPane.alignment="CENTER">
+            <Button fx:id="buttonRetour" mnemonicParsing="false" text="← Retour" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold; -fx-cursor: hand;">
                 <VBox.margin>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                 </VBox.margin>
             </Button>
-            <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
+            <HBox alignment="CENTER">
                 <children>
-                    <Label fx:id="label" contentDisplay="CENTER" text="Test" />
+                    <Label fx:id="label" contentDisplay="CENTER" text="Gestion des Scrutateurs" style="-fx-text-fill: #2c3e50; -fx-font-weight: bold;">
+                        <font>
+                            <Font size="24.0" />
+                        </font>
+                    </Label>
                 </children>
+                <padding>
+                    <Insets bottom="20.0" />
+                </padding>
             </HBox>
         </VBox>
     </top>
     <center>
-        <ListView fx:id="listViewScrutateur" prefHeight="300.0" prefWidth="800.0" BorderPane.alignment="CENTER">
-            <BorderPane.margin>
-                <Insets top="2.0" />
-            </BorderPane.margin>
-        </ListView>
+        <VBox alignment="CENTER" style="-fx-padding: 30;">
+            <ListView fx:id="listViewScrutateur" prefHeight="350.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2); -fx-border-color: #e0e0e0; -fx-border-radius: 10;" />
+        </VBox>
     </center>
     <bottom>
-        <VBox alignment="CENTER" BorderPane.alignment="CENTER">
-            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="600.0">
+        <VBox alignment="CENTER" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, -2);" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="40.0">
                 <children>
-                    <Label fx:id="statue" alignment="CENTER" minWidth="-Infinity" prefHeight="30.0" />
+                    <Label fx:id="statue" alignment="CENTER" style="-fx-text-fill: #7f8c8d; -fx-font-style: italic;" />
                 </children>
             </HBox>
-            <VBox alignment="CENTER" maxWidth="200.0" prefWidth="200.0" spacing="5.0">
+            <VBox alignment="CENTER" maxWidth="400.0" spacing="15.0" style="-fx-background-color: #f8f9fa; -fx-background-radius: 10; -fx-padding: 20;">
                 <children>
-                    <Label text="Création Scrutateur" />
-                    <TextField fx:id="usernameField" alignment="CENTER" prefWidth="80.0" promptText="Nom d'utilisateur" />
-                    <PasswordField fx:id="passwordField" alignment="CENTER" prefWidth="80.0" promptText="Mot de passe" />
+                    <Label text="Créer un nouveau scrutateur" style="-fx-text-fill: #2c3e50; -fx-font-weight: bold; -fx-font-size: 16px;" />
+                    <TextField fx:id="usernameField" prefWidth="300.0" promptText="Nom d'utilisateur" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #ddd; -fx-padding: 10;" />
+                    <PasswordField fx:id="passwordField" prefWidth="300.0" promptText="Mot de passe" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #ddd; -fx-padding: 10;" />
                 </children>
             </VBox>
-            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="600.0" spacing="15.0">
+            <HBox alignment="CENTER" spacing="15.0" style="-fx-padding: 20;">
                 <children>
-                    <Button fx:id="buttonCreerScrutateur" text="Créer un Scrutateur" />
-                    <Button fx:id="buttonSuprScrutateur" text="Supprimer" />
-                    <Button fx:id="buttonReload" text="Rafraîchir" />
+                    <Button fx:id="buttonCreerScrutateur" text="✓ Créer" style="-fx-background-color: #9b59b6; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 10 20; -fx-font-weight: bold; -fx-cursor: hand;" />
+                    <Button fx:id="buttonSuprScrutateur" text="✗ Supprimer" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 10 20; -fx-font-weight: bold; -fx-cursor: hand;" />
+                    <Button fx:id="buttonReload" text="↻ Actualiser" style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 10 20; -fx-font-weight: bold; -fx-cursor: hand;" />
                 </children>
             </HBox>
         </VBox>
