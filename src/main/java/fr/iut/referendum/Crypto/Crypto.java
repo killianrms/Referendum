@@ -66,6 +66,10 @@ public abstract class Crypto {
 
     // Zero Knowledge Protocol
     public static BigInteger[] createZKProof(BigInteger m, BigInteger[] c, BigInteger[] pk, BigInteger r) throws NoSuchAlgorithmException {
+        if (!m.equals(BigInteger.ZERO) && !m.equals(BigInteger.ONE)) {
+            return new BigInteger[]{BigInteger.ZERO, BigInteger.ZERO, BigInteger.ZERO, BigInteger.ZERO};
+        }
+
         BigInteger c1 = c[0];
         BigInteger c2 = c[1];
         BigInteger p = pk[0];
