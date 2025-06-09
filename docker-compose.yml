@@ -1,0 +1,9 @@
+services:
+  serveur_referendum:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: Projet-Referendum-Serveur
+    ports:
+      - "3390:3390"
+    restart: unless-stopped
