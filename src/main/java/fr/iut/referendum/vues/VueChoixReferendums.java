@@ -206,15 +206,21 @@ public class VueChoixReferendums extends BorderPane {
                 // cryptage
                 BigInteger[][] res = Crypto.encrypt(choixint, pk);
                 BigInteger[] choixCrypter = res[0];
-                BigInteger[] ZKproof = res[1];
+                BigInteger r = res[1][0];
+
+                BigInteger[] ZKProof = Crypto.createZKProof(choixint, choixCrypter, pk, r);
 
                 writer.println(choixCrypter[0]);
                 writer.println(choixCrypter[1]);
+                writer.println(ZKProof[0]);
+                writer.println(ZKProof[1]);
+                writer.println(ZKProof[2]);
+                writer.println(ZKProof[3]);
 
                 if (reader.readLine().equals("Vote enregistré")) {
                     statue.setText("Vote enregistré");
                 } else {
-                    statue.setText("Vote impossible");
+                    statue.setText("Vote impossible" + reader.readLine());
                 }
             }
         } catch (Exception e) {

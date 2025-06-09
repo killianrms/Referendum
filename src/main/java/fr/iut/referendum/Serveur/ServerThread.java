@@ -1,10 +1,12 @@
 package fr.iut.referendum.Serveur;
 
+import fr.iut.referendum.Crypto.Crypto;
 import fr.iut.referendum.libs.ConnexionBD;
 
 import java.io.*;
 import java.math.BigInteger;
 import java.net.*;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -381,11 +383,33 @@ public class ServerThread extends Thread {
         BigInteger c1 = new BigInteger(reader.readLine());
         BigInteger c2 = new BigInteger(reader.readLine());
         BigInteger[] c = new BigInteger[]{c1, c2}; // choix crypté
-        if (connexionBD.voter(login, idReferendum)) {
-            referendum.agregeVote(c);
-            writer.println("Vote enregistré");
-        } else {
-            writer.println("Erreur");
+
+        //ZKProof
+        BigInteger chall0 = new BigInteger(reader.readLine());
+        BigInteger rep0 = new BigInteger(reader.readLine());
+        BigInteger chall1 = new BigInteger(reader.readLine());
+        BigInteger rep1 = new BigInteger(reader.readLine());
+
+        BigInteger[] pi = {chall0, rep0, chall1, rep1};
+
+        try {
+            boolean ZKProof = Crypto.verifyZKProof(c, clePublique, pi);
+            if (ZKProof) {
+                if (connexionBD.voter(login, idReferendum)) {
+                    referendum.agregeVote(c);
+                    writer.println("Vote enregistré");
+                } else {
+                    writer.println("Erreur");
+                }
+            }
+            else {
+                System.out.println("Tentative de vote avec preuve invalide");
+                writer.println("La preuve ZK n'est pas correcte");
+            }
+        }
+        catch (NoSuchAlgorithmException e) {
+            System.out.println("Exception retournée par la preuve ZK");
+            writer.println("Erreur dans la preuve ZK");
         }
     }
 }
