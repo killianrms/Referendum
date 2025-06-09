@@ -2,6 +2,8 @@ package fr.iut.referendum.Crypto;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Crypto {
     private static final SecureRandom random = new SecureRandom();
@@ -51,6 +53,21 @@ public abstract class Crypto {
 
         BigInteger M = c2.multiply(c1.modPow(sk, p).modInverse(p)).mod(p);   // M = v × (u^x)^−1 mod p
 
+        // Utilisation de Baby-step Giant-step pour trouver m tel que g^m = M mod p
+        return babyStepGiantStep(g, M, p, nbVotants);
+    }
+
+    /**
+     * Version originale avec recherche exhaustive (pour comparaison)
+     */
+    public static BigInteger decryptBruteForce(BigInteger[] c, BigInteger[] pk, BigInteger sk, int nbVotants) {
+        BigInteger c1 = c[0];
+        BigInteger c2 = c[1];
+        BigInteger p = pk[0];
+        BigInteger g = pk[1];
+
+        BigInteger M = c2.multiply(c1.modPow(sk, p).modInverse(p)).mod(p);   // M = v × (u^x)^−1 mod p
+
         BigInteger B = BigInteger.valueOf(nbVotants);
         for (BigInteger m = BigInteger.ZERO; m.compareTo(B) <= 0; m = m.add(BigInteger.ONE)) {
             BigInteger gPowM = g.modPow(m, p);
@@ -58,6 +75,45 @@ public abstract class Crypto {
                 return m;
             }
         }
+        System.out.println("Déchiffrement échoué");
+        return null;
+    }
+
+    /**
+     * Algorithme Baby-step Giant-step pour résoudre le problème du logarithme discret
+     * Trouve m tel que g^m = h mod p, avec m dans [0, B]
+     */
+    private static BigInteger babyStepGiantStep(BigInteger g, BigInteger h, BigInteger p, int B) {
+        // Calcul de m = ceil(sqrt(B))
+        int m = (int) Math.ceil(Math.sqrt(B + 1));
+        
+        // Baby steps: Calcul et stockage de g^j mod p pour j = 0, 1, ..., m-1
+        Map<BigInteger, Integer> babySteps = new HashMap<>();
+        BigInteger gPower = BigInteger.ONE;
+        
+        for (int j = 0; j < m; j++) {
+            babySteps.put(gPower, j);
+            gPower = gPower.multiply(g).mod(p);
+        }
+        
+        // Giant steps: Calcul de g^(-m) mod p
+        BigInteger gInverseM = g.modPow(BigInteger.valueOf(m).negate(), p);
+        
+        // Recherche de la collision
+        BigInteger gamma = h;
+        for (int i = 0; i <= m; i++) {
+            if (babySteps.containsKey(gamma)) {
+                int j = babySteps.get(gamma);
+                BigInteger result = BigInteger.valueOf(i).multiply(BigInteger.valueOf(m)).add(BigInteger.valueOf(j));
+                
+                // Vérification que le résultat est dans la plage attendue
+                if (result.compareTo(BigInteger.valueOf(B)) <= 0) {
+                    return result;
+                }
+            }
+            gamma = gamma.multiply(gInverseM).mod(p);
+        }
+        
         System.out.println("Déchiffrement échoué");
         return null;
     }
