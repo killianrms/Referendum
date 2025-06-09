@@ -128,7 +128,7 @@ public abstract class Crypto {
         BigInteger A0 = (g.modPow(rep0, p)).multiply(c1.modPow(chall0, p)).mod(p);
         BigInteger A1 = (g.modPow(rep1, p)).multiply(c1.modPow(chall1, p)).mod(p);
         BigInteger B0 = (h.modPow(rep0, p)).multiply(c2.modPow(chall0, p)).mod(p);
-        BigInteger B1 = (h.modPow(rep1, p)).multiply((c2.multiply(g.modInverse(p)).mod(p)).modPow(chall1, p)).mod(p);
+        BigInteger B1 = h.modPow(rep1, p).multiply(c2.multiply(g.modPow(BigInteger.ONE, p).modInverse(p)).mod(p).modPow(chall1, p)).mod(p);
 
         BigInteger[] values = {c1, c2, A0, B0, A1, B1};
 
