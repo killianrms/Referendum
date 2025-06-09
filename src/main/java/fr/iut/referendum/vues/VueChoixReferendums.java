@@ -203,7 +203,9 @@ public class VueChoixReferendums extends BorderPane {
                 // choix vote
                 BigInteger choixint = choix ? BigInteger.ONE : BigInteger.ZERO;
                 // cryptage
-                BigInteger[] choixCrypter = Crypto.encrypt(choixint, pk);
+                BigInteger[][] res = Crypto.encrypt(choixint, pk);
+                BigInteger[] choixCrypter = res[0];
+                BigInteger[] ZKproof = res[1];
 
                 writer.println(choixCrypter[0]);
                 writer.println(choixCrypter[1]);
