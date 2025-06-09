@@ -116,15 +116,13 @@ public class VueScrutateur extends BorderPane {
 
     private void vueCGU() {
         StringBuilder text = new StringBuilder();
-
-        try (InputStream is = getClass().getClassLoader().getResourceAsStream("Légal/CGU.txt");
-             Scanner scanner = new Scanner(is)) {
+        File file = new File("src/main/resources/Légal/CGU.txt");
+        try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 text.append(scanner.nextLine()).append("\n");
             }
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             text = new StringBuilder("Erreur de chargement des CGU");
-            e.printStackTrace();
         }
 
         Scene scene = new Scene(new VueText(text.toString(), "Conditions générales d'utilisation"));
@@ -136,15 +134,13 @@ public class VueScrutateur extends BorderPane {
 
     private void vueML() {
         StringBuilder text = new StringBuilder();
-
-        try (InputStream is = getClass().getClassLoader().getResourceAsStream("Légal/ML.txt");
-             Scanner scanner = new Scanner(is)) {
+        File file = new File("src/main/resources/Légal/ML.txt");
+        try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 text.append(scanner.nextLine()).append("\n");
             }
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             text = new StringBuilder("Erreur de chargement des mentions légales");
-            e.printStackTrace();
         }
 
         Scene scene = new Scene(new VueText(text.toString(), "Mentions légales"));

@@ -104,7 +104,7 @@ public class VueChoixReferendums extends BorderPane {
 
     private void vueCGU() {
         StringBuilder text = new StringBuilder();
-        File file = new File("src/main/Légal/CGU.txt");
+        File file = new File("src/main/resources/Légal/CGU.txt");
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 text.append(scanner.nextLine()).append("\n");
@@ -122,7 +122,7 @@ public class VueChoixReferendums extends BorderPane {
 
     private void vueML() {
         StringBuilder text = new StringBuilder();
-        File file = new File("src/main/Légal/ML.txt");
+        File file = new File("src/main/resources/Légal/ML.txt");
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 text.append(scanner.nextLine()).append("\n");
