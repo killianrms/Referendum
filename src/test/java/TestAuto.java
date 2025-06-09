@@ -163,7 +163,7 @@ public class TestAuto extends ApplicationTest {
         sleep(500);
     }
 
-    private void voteReferendum(String referendumName, Boolean[] voteAFaire) {
+    private void voteReferendum(String referendumName, Boolean[] voteAFaire, int voteBourrageUrne) {
         for (int i = 0; i < voteAFaire.length; i++) {
             MainClient clientApp = new MainClient();
             Platform.runLater(() -> {
@@ -199,6 +199,39 @@ public class TestAuto extends ApplicationTest {
 
             Button buttonVoter = lookup("#buttonSelect").queryAs(Button.class);
             clickOn(buttonVoter);
+
+            sleep(500);
+        }
+
+        if (voteBourrageUrne != 0) {
+            MainClient clientApp = new MainClient();
+            clientApp.setVoteBourrageUrne(voteBourrageUrne);
+
+            Platform.runLater(() -> {
+                primaryStageReference.close();
+                clientApp.start(primaryStageReference);
+            });
+            sleep(500);
+
+            connection("ClientTestAuto5", "ClientTestAuto123.");
+
+            sleep(500);
+
+            Button buttonReload3 = lookup("#buttonReload").queryAs(Button.class);
+            clickOn(buttonReload3);
+            sleep(500);
+
+            ListView<String> listViewReferendumClient = lookup("#listViewReferendums").queryAs(ListView.class);
+
+            for (String s : listViewReferendumClient.getItems()) {
+                if (s.contains(referendumName)) {
+                    listViewReferendumClient.getSelectionModel().select(s);
+                    break;
+                }
+            }
+
+            RadioButton radioOui = lookup("#radioOui").queryAs(RadioButton.class);
+            clickOn(radioOui);
 
             sleep(500);
         }
@@ -271,7 +304,6 @@ public class TestAuto extends ApplicationTest {
         } else if (labelStatue.getText().contains("Egalité")) {
             return "Egalité";
         } else {
-            System.out.println("Erreur dans le résultat du référendum : " + labelStatue.getText());
             return "Erreur";
         }
     }
@@ -332,7 +364,7 @@ public class TestAuto extends ApplicationTest {
 
     @ParameterizedTest(name = "{index} - Vote {0} => Résultat attendu : {1}")
     @MethodSource("voteReferendumTestCases")
-    void TestClientReferendum(
+    void TestReferendum(
             Boolean[] voteAFaire,
             String resultatAttendu
     ) {
@@ -348,7 +380,7 @@ public class TestAuto extends ApplicationTest {
 
         createKeyAndSendFile(loginScrutateur, pwdScrutateur, pwdKey, referendumName);
 
-        voteReferendum(referendumName, voteAFaire);
+        voteReferendum(referendumName, voteAFaire, 0);
 
         String resultat = resultatReferendum(loginScrutateur, pwdScrutateur, pwdKey, referendumName);
 
@@ -369,6 +401,45 @@ public class TestAuto extends ApplicationTest {
         );
     }
 
+    @ParameterizedTest(name = "{index} - Vote {0} => Résultat attendu : {1}")
+    @MethodSource("voteReferendumBourrageUrneTestCases")
+    void TestReferendumBourrageUrne(
+            Boolean[] voteAFaire,
+            int voteBourrageUrne,
+            String resultatAttendu
+    ) {
+        String referendumName = "TestClientVote";
+        String loginScrutateur = "TestAuto";
+        String pwdScrutateur = "TestAuto123.";
+        String pwdKey = "azertyuiopqsdfgh";
+        int plusMinutes = 2;
+
+        connectionAdmin();
+
+        createReferendum(referendumName, loginScrutateur, plusMinutes);
+
+        createKeyAndSendFile(loginScrutateur, pwdScrutateur, pwdKey, referendumName);
+
+        voteReferendum(referendumName, voteAFaire, voteBourrageUrne);
+
+        String resultat = resultatReferendum(loginScrutateur, pwdScrutateur, pwdKey, referendumName);
+
+        System.out.println("Résultat du référendum : " + resultat);
+
+        suprimerReferendum(referendumName);
+
+        assertEquals(resultatAttendu, resultat, "Le résultat du référendum n'est pas celui attendu");
+    }
+
+    private static Stream<Arguments> voteReferendumBourrageUrneTestCases() {
+        return Stream.of(
+                Arguments.of(new Boolean[]{true, false}, 10, "Erreur"),
+                Arguments.of(new Boolean[]{true, false}, -10, "Erreur"),
+                Arguments.of(new Boolean[]{false, false}, 3, "Erreur"),
+                Arguments.of(new Boolean[]{true, true}, -2, "Erreur")
+        );
+    }
+
     @Test
     void TestScrutateur() {
         MainScrutateur scrutateurApp = new MainScrutateur();
@@ -385,6 +456,8 @@ public class TestAuto extends ApplicationTest {
         sleep(500);
 
         connection("TestAuto", "TestAuto123.");
+
+        sleep(500);
 
         VueScrutateur vueScrutateurInstance = scrutateurApp.getVueScrutateur();
         if (vueScrutateurInstance != null) {
@@ -518,8 +591,6 @@ public class TestAuto extends ApplicationTest {
         listViewClient.getSelectionModel().select("admin - admin");
         clickOn(buttonSupprimerClient);
         assertEquals(u, listViewClient.getItems().size(), "Le nombre de client n'est pas le bon après la suppression du client");
-
-        // TODO: Vérifier que le client admin ne peut pas être supprimé avec un message d'erreur approprié
     }
 
     @Test
