@@ -105,13 +105,21 @@ public class VueCrudClient extends BorderPane {
     }
 
     private void supprimerClient() {
-        if (listViewClient.getSelectionModel().getSelectedItem() == null) {
+        String selectedClient = listViewClient.getSelectionModel().getSelectedItem();
+        if (selectedClient == null) {
             statue.setText("Veuillez sélectionner un client");
             return;
         }
-        String loginClient = listViewClient.getSelectionModel().getSelectedItem();
+        if (selectedClient.contains("admin")) {
+            statue.setText("Vous ne pouvez pas supprimer un admin");
+            return;
+        }
+        if (selectedClient.contains(login)) {
+            statue.setText("Vous ne pouvez pas supprimer votre propre compte");
+            return;
+        }
         writer.println("SUPPRIMER_CLIENT");
-        writer.println(loginClient);
+        writer.println(selectedClient);
         try {
             if(!reader.readLine().equals("Client supprimé")) {
                 statue.setText("Erreur de suppression du client");

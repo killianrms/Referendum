@@ -116,3 +116,6 @@ build/
 CLAUDE.md
 .claude/
 .claude*
+
+# TestAuto
+KeyTestAuto.txt
