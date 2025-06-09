@@ -182,8 +182,6 @@ public class TestAuto extends ApplicationTest {
 
             ListView<String> listViewReferendumClient = lookup("#listViewReferendums").queryAs(ListView.class);
 
-            clientApp.getVueConnexionClient().getScene().lookup("#listViewReferendums");
-
             for (String s : listViewReferendumClient.getItems()) {
                 if (s.contains(referendumName)) {
                     listViewReferendumClient.getSelectionModel().select(s);
