@@ -3,15 +3,53 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.effect.DropShadow?>
 
-<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" >
+<BorderPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" >
     <center>
-        <VBox alignment="CENTER" fillWidth="false" spacing="10.0">
-            <Label text="Connexion Scrutateur" />
-            <TextField fx:id="usernameField" prefHeight="26.0" prefWidth="240.0" promptText="Nom d'utilisateur" />
-            <PasswordField fx:id="passwordField" prefHeight="26.0" prefWidth="240.0" promptText="Mot de passe" />
-            <Button fx:id="buttonConnecter" text="Se connecter" />
-            <Label fx:id="loginStatusLabel" />
+        <VBox alignment="CENTER" maxWidth="450.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+            <VBox alignment="CENTER" spacing="10.0">
+                <Label text="🔍" style="-fx-font-size: 48px;" />
+                <Label text="Connexion Scrutateur" style="-fx-text-fill: #2c3e50; -fx-font-weight: bold;">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+                <Label text="Accès à l'espace de surveillance" style="-fx-text-fill: #7f8c8d; -fx-font-size: 14px;" />
+            </VBox>
+            
+            <Separator maxWidth="250.0" />
+            
+            <VBox spacing="15.0" alignment="CENTER">
+                <VBox spacing="5.0">
+                    <Label text="Identifiant" style="-fx-text-fill: #34495e; -fx-font-weight: bold;" />
+                    <TextField fx:id="usernameField" prefHeight="40.0" prefWidth="280.0" promptText="Votre nom d'utilisateur" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #ddd; -fx-padding: 10; -fx-font-size: 14px;" />
+                </VBox>
+                
+                <VBox spacing="5.0">
+                    <Label text="Mot de passe" style="-fx-text-fill: #34495e; -fx-font-weight: bold;" />
+                    <PasswordField fx:id="passwordField" prefHeight="40.0" prefWidth="280.0" promptText="Votre mot de passe sécurisé" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #ddd; -fx-padding: 10; -fx-font-size: 14px;" />
+                </VBox>
+            </VBox>
+            
+            <VBox spacing="10.0" alignment="CENTER">
+                <Button fx:id="buttonConnecter" text="Accéder à l'espace scrutateur" prefWidth="280.0" prefHeight="45.0" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand;">
+                    <effect>
+                        <DropShadow radius="5.0" offsetY="2.0" color="#0000001a" />
+                    </effect>
+                </Button>
+            </VBox>
+            
+            <Label fx:id="loginStatusLabel" style="-fx-text-fill: #e74c3c; -fx-font-weight: bold; -fx-font-size: 14px;" wrapText="true" maxWidth="280.0" />
+            
+            <Label text="🔒 Connexion sécurisée" style="-fx-text-fill: #95a5a6; -fx-font-size: 12px;" />
+            
+            <padding>
+                <Insets top="30.0" bottom="30.0" left="35.0" right="35.0" />
+            </padding>
         </VBox>
     </center>
 </BorderPane>

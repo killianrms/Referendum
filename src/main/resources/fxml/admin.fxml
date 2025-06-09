@@ -9,69 +9,84 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.effect.DropShadow?>
 
-<fx:root prefHeight="500.0" prefWidth="600.0" type="BorderPane" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+<fx:root prefHeight="700.0" prefWidth="900.0" type="BorderPane" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
     <top>
-        <VBox BorderPane.alignment="CENTER">
-            <Button fx:id="buttonRetour" mnemonicParsing="false" text="Retour">
+        <VBox style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" BorderPane.alignment="CENTER">
+            <Button fx:id="buttonRetour" mnemonicParsing="false" text="← Retour" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-weight: bold; -fx-cursor: hand;">
                 <VBox.margin>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                 </VBox.margin>
             </Button>
-            <VBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0" spacing="20.0">
+            <VBox alignment="CENTER" spacing="10.0">
                 <children>
-                    <Label fx:id="label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="185.0" text="Test" />
-                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="99.0" text="Référendums :" />
+                    <Label fx:id="label" alignment="CENTER" contentDisplay="CENTER" text="Panel d'Administration" style="-fx-text-fill: #2c3e50; -fx-font-weight: bold;">
+                        <font>
+                            <Font size="24.0" />
+                        </font>
+                    </Label>
+                    <Label alignment="CENTER" text="Gestion des Référendums" style="-fx-text-fill: #7f8c8d; -fx-font-size: 14px;" />
                 </children>
+                <padding>
+                    <Insets bottom="20.0" />
+                </padding>
             </VBox>
         </VBox>
     </top>
     <center>
-        <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
-            <ListView fx:id="listViewReferendums" prefHeight="300.0" prefWidth="800.0" BorderPane.alignment="CENTER">
-                <BorderPane.margin>
-                    <Insets top="2.0" />
-                </BorderPane.margin>
-            </ListView>
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="91.0" text="Scrutateurs :" />
-            <ListView fx:id="listViewScrutateur" prefHeight="300.0" prefWidth="800.0" BorderPane.alignment="CENTER">
-                <BorderPane.margin>
-                    <Insets top="2.0" />
-                </BorderPane.margin>
-            </ListView>
+        <VBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+                <Label alignment="CENTER" text="Référendums actifs" style="-fx-text-fill: #34495e; -fx-font-weight: bold; -fx-font-size: 16px;" />
+                <ListView fx:id="listViewReferendums" prefHeight="200.0" style="-fx-background-color: #fafafa; -fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
+            </VBox>
+            <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+                <Label alignment="CENTER" text="Scrutateurs assignés" style="-fx-text-fill: #34495e; -fx-font-weight: bold; -fx-font-size: 16px;" />
+                <ListView fx:id="listViewScrutateur" prefHeight="200.0" style="-fx-background-color: #fafafa; -fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
+            </VBox>
+            <padding>
+                <Insets left="30.0" right="30.0" top="20.0" bottom="20.0" />
+            </padding>
         </VBox>
     </center>
     <bottom>
-        <VBox alignment="CENTER" BorderPane.alignment="CENTER">
-            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="600.0">
+        <VBox alignment="CENTER" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, -2);" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="40.0">
                 <children>
-                    <Label fx:id="statue" alignment="CENTER" prefHeight="30.0" prefWidth="501.0" />
+                    <Label fx:id="statue" alignment="CENTER" style="-fx-text-fill: #7f8c8d; -fx-font-style: italic;" />
                 </children>
             </HBox>
-            <VBox alignment="CENTER" maxWidth="447.0" prefHeight="134.0" prefWidth="447.0" spacing="5.0">
+            <VBox alignment="CENTER" maxWidth="500.0" spacing="15.0" style="-fx-background-color: #f8f9fa; -fx-background-radius: 10; -fx-padding: 20;">
                 <children>
-                    <Label text="Nom :" />
-                    <TextField fx:id="nomReferendum" alignment="CENTER" prefHeight="26.0" prefWidth="231.0" promptText="exemple" />
-                    <DatePicker fx:id="datePickerFin" prefHeight="26.0" prefWidth="184.0" />
-                    <Label text="Heure :" />
-                    <TextField fx:id="heureFin" alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="176.0" promptText="HH:mm" />
+                    <Label text="Créer un nouveau référendum" style="-fx-text-fill: #2c3e50; -fx-font-weight: bold; -fx-font-size: 14px;" />
+                    <HBox alignment="CENTER" spacing="10.0">
+                        <Label text="Nom :" minWidth="50.0" style="-fx-text-fill: #34495e;" />
+                        <TextField fx:id="nomReferendum" prefWidth="300.0" promptText="Nom du référendum" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #ddd; -fx-padding: 8;" />
+                    </HBox>
+                    <HBox alignment="CENTER" spacing="10.0">
+                        <Label text="Date :" minWidth="50.0" style="-fx-text-fill: #34495e;" />
+                        <DatePicker fx:id="datePickerFin" prefWidth="150.0" style="-fx-background-radius: 5;" />
+                        <Label text="Heure :" style="-fx-text-fill: #34495e;" />
+                        <TextField fx:id="heureFin" prefWidth="80.0" promptText="HH:mm" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #ddd; -fx-padding: 8;" />
+                    </HBox>
                 </children>
             </VBox>
-            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="600.0" spacing="15.0">
+            <HBox alignment="CENTER" spacing="15.0" style="-fx-padding: 20;">
                 <children>
-                    <Button fx:id="buttonCreerReferendum" mnemonicParsing="false" text="Créer un référendum" />
-                    <Button fx:id="buttonSuprReferendum" mnemonicParsing="false" text="Supprimer un référendum" />
-                    <Button fx:id="buttonReload" text="Rafraîchir" />
-                    <Button fx:id="buttonGererScrutateur" text="Gérer Scrutateur" />
-                    <Button fx:id="buttonGererClient" text="Gérer Client" />
+                    <Button fx:id="buttonCreerReferendum" mnemonicParsing="false" text="✓ Créer" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 10 20; -fx-font-weight: bold; -fx-cursor: hand;" />
+                    <Button fx:id="buttonSuprReferendum" mnemonicParsing="false" text="✗ Supprimer" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 10 20; -fx-font-weight: bold; -fx-cursor: hand;" />
+                    <Button fx:id="buttonReload" text="↻ Rafraîchir" style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 10 20; -fx-font-weight: bold; -fx-cursor: hand;" />
+                    <Button fx:id="buttonGererScrutateur" text="👥 Scrutateurs" style="-fx-background-color: #9b59b6; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 10 20; -fx-font-weight: bold; -fx-cursor: hand;" />
+                    <Button fx:id="buttonGererClient" text="👤 Clients" style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 10 20; -fx-font-weight: bold; -fx-cursor: hand;" />
                 </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="40.0" spacing="10.0">
+            <HBox alignment="CENTER" spacing="10.0">
                 <children>
-                    <Button fx:id="buttonFAQ" mnemonicParsing="false" text="FAQ / Aide" style="-fx-background-color: #28a745; -fx-text-fill: white;" />
+                    <Button fx:id="buttonFAQ" mnemonicParsing="false" text="❓ FAQ / Aide" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 20; -fx-font-weight: bold; -fx-cursor: hand;" />
                 </children>
                 <padding>
-                    <Insets bottom="10.0" />
+                    <Insets bottom="15.0" />
                 </padding>
             </HBox>
         </VBox>
