@@ -33,6 +33,8 @@ public class VueChoixReferendums extends BorderPane {
     private BufferedReader reader;
     private PrintWriter writer;
 
+    int TestAutovoteBourrageUrne = 0;
+
     public VueChoixReferendums(String login, PrintWriter writer, BufferedReader reader) {
         this.login = login;
         this.reader = reader;
@@ -202,7 +204,13 @@ public class VueChoixReferendums extends BorderPane {
                 BigInteger[] pk = new BigInteger[]{p, g, h};
 
                 // choix vote
-                BigInteger choixint = choix ? BigInteger.ONE : BigInteger.ZERO;
+                BigInteger choixint;
+                if (TestAutovoteBourrageUrne != 0) {
+                    choixint = BigInteger.valueOf(TestAutovoteBourrageUrne);
+                } else {
+                    choixint = choix ? BigInteger.ONE : BigInteger.ZERO;
+                }
+
                 // cryptage
                 BigInteger[][] res = Crypto.encrypt(choixint, pk);
                 BigInteger[] choixCrypter = res[0];
@@ -259,5 +267,9 @@ public class VueChoixReferendums extends BorderPane {
             return "Erreur";
         }
         return reader.readLine();
+    }
+
+    public void setTestAutovoteBourrageUrne(int testAutovoteBourrageUrne) {
+        TestAutovoteBourrageUrne = testAutovoteBourrageUrne;
     }
 }

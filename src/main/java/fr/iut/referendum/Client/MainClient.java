@@ -97,6 +97,10 @@ public class MainClient extends Application {
         }
     }
 
+    public void setVoteBourrageUrne(int bourrageUrne) {
+        vueChoixReferendums.setTestAutovoteBourrageUrne(bourrageUrne);
+    }
+
     public static void main(String[] args) {
         launch();
     }
