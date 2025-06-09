@@ -84,13 +84,13 @@ public abstract class Crypto {
         chall[mj] = new BigInteger(p.bitLength(), random).mod(p);
         rep[mj] = new BigInteger(p.bitLength(), random).mod(p);
 
-        A[mj] = (g.modPow(rep[mj], p).mod(p)).multiply(c1.modPow(chall[mj], p)).mod(p);
-        B[mj] = ((h.modPow(rep[mj], p).mod(p)).multiply((c2.multiply(g.modInverse(p))).modPow(chall[mj], p)).mod(p)).mod(p);
+        A[mj] = ((g.modPow(rep[mj], p)).multiply(c1.modPow(chall[mj], p))).mod(p);
+        B[mj] = ((h.modPow(rep[mj], p)).multiply((c2.multiply(g.modInverse(p))).modPow(chall[mj], p))).mod(p);
 
         // True value
-        BigInteger w = new BigInteger(p.bitLength(), random).mod(p);
-        A[mi] = g.modPow(w, p).mod(p);
-        B[mi] = h.modPow(w, p).mod(p);
+        BigInteger w = new BigInteger(p.bitLength(), random);
+        A[mi] = g.modPow(w, p);
+        B[mi] = h.modPow(w, p);
 
         BigInteger[] values = {c1, c2, A[0], B[0], A[1], B[1]};
 
@@ -121,10 +121,10 @@ public abstract class Crypto {
         BigInteger chall1 = pi[2];
         BigInteger rep1 = pi[3];
 
-        BigInteger A0 = (g.modPow(rep0, p).mod(p)).multiply(c1.modPow(chall0, p)).mod(p);
-        BigInteger A1 = (g.modPow(rep1, p).mod(p)).multiply(c1.modPow(chall1, p)).mod(p);
-        BigInteger B0 = (h.modPow(rep0, p).mod(p)).multiply(c2.modPow(chall0, p)).mod(p);
-        BigInteger B1 = (h.modPow(rep1, p).mod(p)).multiply((c2.divide(g).mod(p)).modPow(chall1, p)).mod(p);
+        BigInteger A0 = (g.modPow(rep0, p)).multiply(c1.modPow(chall0, p)).mod(p);
+        BigInteger A1 = (g.modPow(rep1, p)).multiply(c1.modPow(chall1, p)).mod(p);
+        BigInteger B0 = (h.modPow(rep0, p)).multiply(c2.modPow(chall0, p)).mod(p);
+        BigInteger B1 = (h.modPow(rep1, p)).multiply((c2.multiply(g.modInverse(p)).mod(p)).modPow(chall1, p)).mod(p);
 
         BigInteger[] values = {c1, c2, A0, B0, A1, B1};
 
