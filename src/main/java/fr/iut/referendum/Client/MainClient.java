@@ -97,6 +97,10 @@ public class MainClient extends Application {
         }
     }
 
+    public VueConnexionClient getVueConnexionClient() {
+        return vueConnexionClient;
+    }
+
     public static void main(String[] args) {
         launch();
     }

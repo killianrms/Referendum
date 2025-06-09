@@ -64,6 +64,7 @@ public class VueChoixReferendums extends BorderPane {
             writer.println(login);
             if (reader.readLine().equals("true")) {
                 buttonAdmin = new Button("Section administratreur");
+                buttonAdmin.setId("buttonAdmin");
                 hboxBas.getChildren().add(buttonAdmin);
                 buttonAdmin.setOnMouseClicked(mouseEvent -> {
                     Scene scene = new Scene(new VueAdmin(login, writer, reader));
