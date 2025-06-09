@@ -6,9 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.VBox; // Importation non utilisée, peut-être à supprimer si non nécessaire
 import javafx.stage.Stage;
-import javafx.stage.FileChooser;
+import javafx.stage.FileChooser; // Sera moins utilisé directement
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -19,6 +19,9 @@ import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Scanner;
 
+import fr.iut.referendum.util.FileChooserService;
+import fr.iut.referendum.util.DefaultFileChooserService;
+
 public class VueScrutateur extends BorderPane {
 
     @FXML
@@ -28,7 +31,7 @@ public class VueScrutateur extends BorderPane {
     @FXML
     private Button buttonNewFile, buttonEnvoyer, buttonResultat, buttonReload, buttonLoadFile, buttonCGU, buttonML, buttonFAQ;
     @FXML
-    private TextField nomfichier;
+    private TextField nomfichier; // Non utilisé dans le code fourni, peut-être à supprimer
     @FXML
     private PasswordField mdpfichier;
 
@@ -39,10 +42,17 @@ public class VueScrutateur extends BorderPane {
     private BigInteger[] pk;
     private BigInteger sk;
 
+    private FileChooserService fileChooserService;
+
     public VueScrutateur(String login, PrintWriter writer, BufferedReader reader) {
+        this(login, writer, reader, new DefaultFileChooserService());
+    }
+
+    public VueScrutateur(String login, PrintWriter writer, BufferedReader reader, FileChooserService fileChooserService) {
         this.login = login;
         this.reader = reader;
         this.writer = writer;
+        this.fileChooserService = fileChooserService;
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/scrutateur.fxml"));
@@ -54,17 +64,21 @@ public class VueScrutateur extends BorderPane {
         }
 
         labelClient.setText("Scrutateur : " + login);
-        labelfichier.setText("Fichier sélétionner : Aucun");
+        labelfichier.setText("Fichier sélectionné : Aucun");
 
         loadReferendumsScrutateur();
         creerBindings();
+    }
+
+    public void setFileChooserService(FileChooserService fileChooserService) {
+        this.fileChooserService = fileChooserService;
     }
 
     private void creerBindings() {
         buttonReload.setOnMouseClicked(mouseEvent -> {
             loadReferendumsScrutateur();
         } );
-        
+
         buttonEnvoyer.setOnMouseClicked(mouseEvent -> {
             try {
                 envoyerCle();
@@ -102,7 +116,7 @@ public class VueScrutateur extends BorderPane {
 
     private void vueCGU() {
         StringBuilder text = new StringBuilder();
-        File file = new File("src/main/Légal/CGU.txt");
+        File file = new File("src/main/resources/Légal/CGU.txt");
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 text.append(scanner.nextLine()).append("\n");
@@ -120,7 +134,7 @@ public class VueScrutateur extends BorderPane {
 
     private void vueML() {
         StringBuilder text = new StringBuilder();
-        File file = new File("src/main/Légal/ML.txt");
+        File file = new File("src/main/resources/Légal/ML.txt");
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 text.append(scanner.nextLine()).append("\n");
@@ -149,20 +163,20 @@ public class VueScrutateur extends BorderPane {
     public void loadFile() {
         statue.setText("Chargement du fichier de sécurisation");
         try {
-            // Configuration du FileChooser
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Sélectionner un fichier de sécurisation");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers texte", "*.txt"));
 
-            // Afficher la boîte de dialogue pour sélectionner un fichier
-            File file = fileChooser.showOpenDialog(new Stage());
+            File file = fileChooserService.showSaveDialog(
+                    new Stage(),
+                    "Sélectionner un fichier de sécurisation",
+                    null,
+                    new FileChooser.ExtensionFilter("Fichiers texte", "*.txt")
+            );
+
 
             if (file == null) {
                 statue.setText("Aucun fichier sélectionné.");
                 return;
             }
 
-            // Vérification du mot de passe
             if (mdpfichier.getText().isEmpty()) {
                 statue.setText("Mot de passe vide");
                 return;
@@ -212,17 +226,15 @@ public class VueScrutateur extends BorderPane {
     }
 
 
-
     public void newFileReferendum() {
         statue.setText("Création du fichier de sécurisation");
         try {
-            // Configuration du FileChooser
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Enregistrer le fichier");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers texte", "*.txt"));
-
-            // Afficher la boîte de dialogue de sauvegarde
-            File file = fileChooser.showSaveDialog(new Stage());
+            File file = fileChooserService.showSaveDialog(
+                    new Stage(),
+                    "Enregistrer le fichier",
+                    null,
+                    new FileChooser.ExtensionFilter("Fichiers texte", "*.txt")
+            );
 
             if (file == null) {
                 statue.setText("Opération annulée par l'utilisateur.");
@@ -322,17 +334,11 @@ public class VueScrutateur extends BorderPane {
         writer.println(idReferendum);
         if (reader.readLine().equals("Erreur")) {
             statue.setText("Choix invalide");
-            return;
-        }
-        if (reader.readLine().equals("Error01")){
+        } else if (reader.readLine().equals("Error01")){
             statue.setText("Resultat déjà calculé : " + reader.readLine());
-            return;
-        }
-        if (reader.readLine().equals("Error02")){
+        } else if (reader.readLine().equals("Error02")){
             statue.setText("Resultat : Egalité (Nombre de votants égal à 0)");
-            return;
-        }
-        else {
+        } else {
             BigInteger c1 = new BigInteger(reader.readLine());
             BigInteger c2 = new BigInteger(reader.readLine());
             BigInteger[] resultatAgrege = {c1, c2};
@@ -365,6 +371,7 @@ public class VueScrutateur extends BorderPane {
         return "Non";
     }
 
+
     private String decryptData(String encryptedData, String password) throws Exception {
         try {
             SecretKeySpec key = new SecretKeySpec(password.getBytes(), "AES");
@@ -373,6 +380,7 @@ public class VueScrutateur extends BorderPane {
             byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedData));
             return new String(decryptedBytes);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }

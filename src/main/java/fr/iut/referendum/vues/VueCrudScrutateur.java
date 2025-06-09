@@ -85,33 +85,18 @@ public class VueCrudScrutateur extends BorderPane {
             statue.setText("Veuillez sélectionner un scrutateur");
             return;
         }
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation de suppression");
-        confirmationAlert.setHeaderText("Suppression du scrutateur");
-        confirmationAlert.setContentText("Êtes-vous sûr de vouloir supprimer ce scrutateur ?");
-
-        ButtonType buttonOui = new ButtonType("Oui", ButtonBar.ButtonData.OK_DONE);
-        ButtonType buttonNon = new ButtonType("Non", ButtonBar.ButtonData.CANCEL_CLOSE);
-        confirmationAlert.getButtonTypes().setAll(buttonOui, buttonNon);
-
-        confirmationAlert.showAndWait().ifPresent(response -> {
-            if (response == buttonOui) {
-                writer.println("SUPPRIMER_SCRUTATEUR");
-                writer.println(loginScrutateur);
-                try {
-                    if (!reader.readLine().equals("Scrutateur supprimé")) {
-                        statue.setText("Le scrutateur est relié à un référendum en cours");
-                    } else {
-                        loadScrutateur();
-                        statue.setText("Scrutateur supprimé");
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+        writer.println("SUPPRIMER_SCRUTATEUR");
+        writer.println(loginScrutateur);
+        try {
+            if (!reader.readLine().equals("Scrutateur supprimé")) {
+                statue.setText("Le scrutateur est relié à un référendum en cours");
             } else {
-                statue.setText("Suppression annulée");
+                loadScrutateur();
+                statue.setText("Scrutateur supprimé");
             }
-        });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

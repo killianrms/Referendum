@@ -20,7 +20,7 @@ public class ConnexionBD {
         try {
             cn = DriverManager.getConnection(instanceEnv.getEnv("dburl"),instanceEnv.getEnv("dblogin"),instanceEnv.getEnv("dbpassword"));
         } catch (Exception e) {
-            throw new RuntimeException("Pas de connexion");
+            throw new RuntimeException("Problème de connexion à la base de données", e);
         }
     }
 
@@ -72,7 +72,6 @@ public class ConnexionBD {
             ps.setInt(2, idReferendum);
             rs = ps.executeQuery();
             if (!rs.next()) {
-                System.out.println("Il n'y a pas d'utilisateur de login " + loginEmploye + " qui a voté au référendum d'id : " + idReferendum);
                 return false;
             }
         } catch (Exception e) {
@@ -127,6 +126,8 @@ public class ConnexionBD {
 
     public boolean supprimerEmploye(String loginEmploye) {
         String query = "DELETE FROM Employes WHERE loginEmploye = ?";
+        // TODO vérifier que l'employé n'est pas admin
+        // car ca peut poser problème
         try (PreparedStatement ps = cn.prepareStatement(query)) {
             ps.setString(1, loginEmploye);
             ps.executeUpdate();

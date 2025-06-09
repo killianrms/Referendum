@@ -100,4 +100,8 @@ public class MainScrutateur extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+    public VueScrutateur getVueScrutateur() {
+        return vueScrutateur;
+    }
 }
