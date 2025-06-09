@@ -103,7 +103,7 @@ public abstract class Crypto {
         }
 
         byte[] hashBytes = md.digest();
-        BigInteger hashInt = new BigInteger(1, hashBytes).mod(p); // e
+        BigInteger hashInt = new BigInteger(1, hashBytes).mod(q); // e
 
         chall[mi] = hashInt.subtract(chall[mj]).mod(q);
         rep[mi] = w.subtract(chall[mj].multiply(r).mod(q)).mod(q);
