@@ -57,12 +57,12 @@ public class FAQChatbot {
                    "1. Sélectionnez un référendum ouvert (statut 'En cours') dans la liste\n" +
                    "2. Choisissez votre réponse : 'Oui' ou 'Non'\n" +
                    "3. Cliquez sur le bouton 'Voter'\n\n" +
-                   "⚠️ Attention : Vous ne pouvez voter qu'une seule fois par référendum !";
+                   "⚠ Attention : Vous ne pouvez voter qu'une seule fois par référendum !";
         }
         
         if (query.contains("je ne peux pas voter") || query.contains("impossible de voter") || query.contains("pourquoi je ne peux pas voter")) {
             return "Il y a plusieurs raisons possibles :\n\n" +
-                   "📅 Le référendum n'est pas encore ouvert au vote (statut 'Fermé')\n" +
+                   "\uD83D\uDDD3 Le référendum n'est pas encore ouvert au vote (statut 'Fermé')\n" +
                    "⏰ Le référendum est terminé (date dépassée)\n" +
                    "✅ Vous avez déjà voté pour ce référendum\n\n" +
                    "Vérifiez le statut du référendum dans la liste des référendums disponibles.";
@@ -72,7 +72,7 @@ public class FAQChatbot {
             return "Pour voir les résultats :\n" +
                    "1. Sélectionnez un référendum TERMINÉ dans la liste\n" +
                    "2. Cliquez sur le bouton 'Résultat'\n\n" +
-                   "⚠️ Les résultats ne sont visibles qu'après la fin du vote !";
+                   "⚠ Les résultats ne sont visibles qu'après la fin du vote !";
         }
         
         if (query.contains("sécurisé") || query.contains("sécurité") || query.contains("anonyme")) {
@@ -93,7 +93,7 @@ public class FAQChatbot {
                    "1. Entrez un mot de passe de 16 caractères exactement\n" +
                    "2. Cliquez sur 'Créer Clé Référendum'\n" +
                    "3. Choisissez l'emplacement de sauvegarde\n\n" +
-                   "⚠️ Gardez précieusement ce fichier et le mot de passe !";
+                   "⚠ Gardez précieusement ce fichier et le mot de passe !";
         }
         
         if (query.contains("clé") && query.contains("envoyer")) {
@@ -101,7 +101,7 @@ public class FAQChatbot {
                    "1. Créez d'abord un fichier de sécurisation\n" +
                    "2. Sélectionnez le référendum dans la liste\n" +
                    "3. Cliquez sur 'Envoyé Clé Référendum'\n\n" +
-                   "La clé ne peut être envoyée qu'une seule fois par référendum.";
+                   "⚠ La clé ne peut être envoyée qu'une seule fois par référendum.";
         }
         
         if (query.contains("résultat") || query.contains("calculer")) {
@@ -115,8 +115,8 @@ public class FAQChatbot {
         
         if (query.contains("rôle") || query.contains("scrutateur")) {
             return "En tant que scrutateur, vous êtes responsable de :\n\n" +
-                   "🔑 Gérer les clés de chiffrement\n" +
-                   "📁 Créer des fichiers de sécurisation\n" +
+                   "\uD83D\uDDDD Gérer les clés de chiffrement\n" +
+                   "\uD83D\uDDC2 Créer des fichiers de sécurisation\n" +
                    "📤 Envoyer votre clé publique au système\n" +
                    "🔓 Déchiffrer les résultats après le vote\n\n" +
                    "Vous garantissez ainsi la sécurité et l'anonymat du vote.";
@@ -138,16 +138,16 @@ public class FAQChatbot {
         
         if (query.contains("gérer") && query.contains("utilisateur")) {
             return "Pour gérer les utilisateurs :\n\n" +
-                   "👥 Gérer Client : Créer/supprimer des comptes employés\n" +
+                   "\uD83D\uDC6A Gérer Client : Créer/supprimer des comptes employés\n" +
                    "🔍 Gérer Scrutateur : Créer/supprimer des comptes scrutateurs\n\n" +
-                   "⚠️ L'administrateur ne peut pas être supprimé !";
+                   "⚠ L'administrateur ne peut pas être supprimé !";
         }
         
         if (query.contains("supprimer") && query.contains("référendum")) {
             return "Pour supprimer un référendum :\n\n" +
                    "1. Sélectionnez le référendum dans la liste\n" +
                    "2. Cliquez sur 'Supprimer un référendum'\n\n" +
-                   "⚠️ Un référendum ne peut être supprimé que s'il est TERMINÉ !";
+                   "⚠ Un référendum ne peut être supprimé que s'il est TERMINÉ !";
         }
         
         if (query.contains("voter") && query.contains("admin")) {
