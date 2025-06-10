@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.math.BigInteger;
 import java.util.Scanner;
+import java.util.StringJoiner;
 
 public class VueChoixReferendums extends BorderPane {
 
@@ -212,12 +213,45 @@ public class VueChoixReferendums extends BorderPane {
                     choixint = choix ? BigInteger.ONE : BigInteger.ZERO;
                 }
 
+                /*
+                Cas 1 : vote invalidé car decrypt a besoin d'nbVotants et que il y a plus de votes que de votants
+                (ou vote négatif)
+
+                Cas 2 : modification uniquement du code de VueChoixReferendums pour envoyer un choixint différent
+                par exemple
+                - BigInteger.TWO
+                - BigInteger.TEN
+                - BigInteger.valueOf(-1)
+                -> envoi du preuve ZK fausse car elle est adaptée que pour m = 0 ou m = 1
+
+                Cas 3 : suppression de la vérification de m = 0 ou m = 1 dans Crypto
+                -> plantage par index out of range, ok car c'est une application pirate modifiée
+
+                Cas 4 : message chiffré différent de 0 ou 1 mais qui se fait passer pour une valeur valide
+                -> preuve invalide à la vérification
+                 */
+
+                if (login.equals("mael")) {
+                    if (choix) {
+                        choixint = BigInteger.TWO;
+                    }
+                    else {
+                        choixint = BigInteger.valueOf(-1);
+                    }
+                }
+
                 // cryptage
                 BigInteger[][] res = Crypto.encrypt(choixint, pk);
                 BigInteger[] choixCrypter = res[0];
                 BigInteger r = res[1][0];
 
-                BigInteger[] ZKProof = Crypto.createZKProof(choixint, choixCrypter, pk, r);
+                BigInteger[] ZKProof;
+                if (login.equals("mael")) {
+                    ZKProof = Crypto.createZKProof(BigInteger.ONE, choixCrypter, pk, r);
+                }
+                else {
+                    ZKProof = Crypto.createZKProof(choixint, choixCrypter, pk, r);
+                }
 
                 writer.println(choixCrypter[0]);
                 writer.println(choixCrypter[1]);
@@ -226,10 +260,12 @@ public class VueChoixReferendums extends BorderPane {
                 writer.println(ZKProof[2]);
                 writer.println(ZKProof[3]);
 
-                if (reader.readLine().equals("Vote enregistré")) {
+                String s = reader.readLine();
+
+                if (s.equals("Vote enregistré")) {
                     statue.setText("Vote enregistré");
                 } else {
-                    statue.setText("Vote impossible" + reader.readLine());
+                    statue.setText("Vote impossible" + s);
                 }
             }
         } catch (Exception e) {
