@@ -97,6 +97,7 @@ public class VueFAQChatbot extends BorderPane {
         for (String suggestion : chatbot.getSuggestions()) {
             Button suggestionBtn = new Button(suggestion);
             suggestionBtn.getStyleClass().add("suggestion-button");
+            suggestionBtn.setStyle("-fx-background-color: #d000ff; -fx-text-fill: white ;-fx-background-radius: 5; -fx-padding: 8 20; -fx-font-weight: bold; -fx-cursor: hand;");
             suggestionBtn.setOnAction(e -> {
                 messageField.setText(suggestion);
                 sendMessage();
