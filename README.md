@@ -20,14 +20,14 @@ Le système suit une architecture trois-tiers sécurisée :
 ```
 ┌─────────────────┐     SSL/TLS      ┌─────────────────┐
 │   Client GUI    │ ◄──────────────► │     Serveur     │
-│   (JavaFX)      │                   │   Multi-thread  │
-└─────────────────┘                   └────────┬────────┘
-                                                │
-┌─────────────────┐                             │
-│  Scrutateur GUI │                             ▼
-│   (JavaFX)      │                   ┌─────────────────┐
-└─────────────────┘                   │  Base Oracle    │
-                                      └─────────────────┘
+│   (JavaFX)      │                  │   Multi-thread  │
+└─────────────────┘                  └────────┬────────┘
+                                              │
+┌─────────────────┐                           │
+│  Scrutateur GUI │                           ▼
+│   (JavaFX)      │                  ┌─────────────────┐
+└─────────────────┘                  │  Base Oracle    │
+                                     └─────────────────┘
 ```
 
 ### 🔧 Technologies utilisées
@@ -42,12 +42,12 @@ Le système suit une architecture trois-tiers sécurisée :
 
 ## 👥 Équipe de développement
 
-| Rôle                        Membre |
-|------                      --------|
-| 🎯 **Scrum Master** | Maël NICOLAS |
-| 📊 **Product Owner** | Killian RAMUS |
-| 💻 **Développeur** | Cyprien BONS |
-| 💻 **Développeur** | Raphaël RIVAS |
+| Rôle                 | Membre           |
+|----------------------|------------------|
+| 🎯 **Scrum Master**  | Maël NICOLAS     |
+| 📊 **Product Owner** | Killian RAMUS    |
+| 💻 **Développeur**   | Cyprien BONS     |
+| 💻 **Développeur**   | Raphaël RIVAS    |
 
 ## 📦 Installation
 
@@ -62,8 +62,7 @@ Le système suit une architecture trois-tiers sécurisée :
 
 1. Cloner le repository :
 ```bash
-git clone https://github.com/votre-repo/projet-referendum.git
-cd projet-referendum
+git clone git@gitlabinfo.iutmontp.univ-montp2.fr:sae-referendum/projet-referendum.git
 ```
 
 2. Créer le fichier `.env` à la racine :
@@ -79,7 +78,7 @@ DB_PASSWORD=votre_password
 
 3. Compiler le projet :
 ```bash
-mvn clean package
+mvn clean package -DskipTests
 ```
 
 ## 🚀 Démarrage rapide
@@ -91,12 +90,12 @@ docker-compose up -d
 
 ### 2. Lancer l'application client
 ```bash
-java -jar target/Projet-referendum-Client.jar
+java --module-path /'cheminvers'/javafx-sdk-'Version'/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base,javafx.media -jar target/Projet-referendum-Client.jar
 ```
 
 ### 3. Lancer l'application scrutateur
 ```bash
-java -jar target/Projet-referendum-Scrutateur.jar
+java --module-path /'cheminvers'/javafx-sdk-'Version'/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base,javafx.media -jar target/Projet-referendum-Scrutateur.jar
 ```
 
 ## 📖 Documentation
@@ -122,12 +121,3 @@ Les tests incluent :
 - Preuves cryptographiques de validité
 - Audit trail complet
 - Protection contre la falsification
-
-## 🤝 Contribution
-
-Les contributions sont les bienvenues ! Merci de :
-1. Fork le projet
-2. Créer une branche (`git checkout -b feature/AmazingFeature`)
-3. Commit vos changements (`git commit -m 'Add AmazingFeature'`)
-4. Push la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrir une Pull Request

@@ -30,7 +30,9 @@ docker --version
 docker-compose --version
 ```
 
-## 🖥️ Installation du Serveur
+### (Utilisation des 3 projets différents : 'Projet-referendum_Serveur', 'Projet-referendum_Client', 'Projet-referendum_Scrutateur')
+
+## 🖥️ Installation du Serveur - [Projet-referendum_Serveur](https://gitlabinfo.iutmontp.univ-montp2.fr/sae-referendum/projet-referendum_serveur)
 
 ### Option 1 : Avec Docker (Recommandé)
 
@@ -68,7 +70,7 @@ docker-compose --version
    java -jar target/Projet-referendum-Serveur.jar
    ```
 
-## 👤 Installation du Client/Admin
+## 👤 Installation du Client/Admin - [Projet-referendum_Client](https://gitlabinfo.iutmontp.univ-montp2.fr/sae-referendum/projet-referendum_client)
 
 Le client et l'admin partagent la même interface. Les permissions sont gérées selon le compte utilisé.
 
@@ -79,25 +81,12 @@ Le client et l'admin partagent la même interface. Les permissions sont gérées
    mvn clean package
    ```
 
-2. **Localiser le JAR**
+2. **Exécuter le JAR**
+
+   **lancer directement**
    ```bash
-   # Le fichier se trouve dans :
-   target/Projet-referendum-Client.jar
+   java --module-path /'cheminvers'/javafx-sdk-'Version'/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base,javafx.media -jar target/Projet-referendum-Client.jar
    ```
-
-3. **Exécuter le JAR**
-
-   **🐧 Linux/Mac :**
-   ```bash
-   java -jar target/Projet-referendum-Client.jar
-   ```
-
-   **🪟 Windows :**
-   ```cmd
-   java -jar target\Projet-referendum-Client.jar
-   ```
-
-   Alternativement, vous pouvez double-cliquer sur le fichier JAR si Java est correctement configuré.
 
 ### Option 2 : Via IDE
 
@@ -110,7 +99,7 @@ Le client et l'admin partagent la même interface. Les permissions sont gérées
 
 3. **Exécuter la classe** `MainClient` (clic droit → Run)
 
-## 🔍 Installation du Scrutateur
+## 🔍 Installation du Scrutateur - [Projet-referendum_Scrutateur](https://gitlabinfo.iutmontp.univ-montp2.fr/sae-referendum/projet-referendum_scrutateur)
 
 ### Option 1 : Via JAR compilé
 
@@ -119,22 +108,11 @@ Le client et l'admin partagent la même interface. Les permissions sont gérées
    mvn clean package
    ```
 
-2. **Localiser le JAR**
+2. **Exécuter le JAR**
+
+   **lancer directement**
    ```bash
-   # Le fichier se trouve dans :
-   target/Projet-referendum-Scrutateur.jar
-   ```
-
-3. **Exécuter le JAR**
-
-   **🐧 Linux/Mac :**
-   ```bash
-   java -jar target/Projet-referendum-Scrutateur.jar
-   ```
-
-   **🪟 Windows :**
-   ```cmd
-   java -jar target\Projet-referendum-Scrutateur.jar
+   java --module-path /'cheminvers'/javafx-sdk-'Version'/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base,javafx.media -jar target/Projet-referendum-Scrutateur.jar
    ```
 
 ### Option 2 : Via IDE
@@ -184,44 +162,3 @@ keytool -genkey -alias serveur -keyalg RSA -keystore keystore.jks -keysize 2048
 1. **Serveur** : Doit être lancé en premier
 2. **Client/Admin** : Peut être lancé une fois le serveur actif
 3. **Scrutateur** : Peut être lancé indépendamment
-
-## ❗ Dépannage
-
-### Problème : "Java command not found"
-
-**Solution Linux/Mac :**
-```bash
-export PATH=$PATH:/path/to/java/bin
-```
-
-**Solution Windows :**
-- Ajouter Java au PATH système via les variables d'environnement
-
-### Problème : "Connection refused"
-
-- Vérifier que le serveur est bien lancé
-- Vérifier le port dans le fichier `.env`
-- Vérifier le pare-feu
-
-### Problème : "JavaFX runtime components are missing"
-
-**Solution :**
-```bash
-# Télécharger JavaFX si nécessaire
-# Puis lancer avec :
-java --module-path /path/to/javafx/lib --add-modules javafx.controls,javafx.fxml -jar target/Projet-referendum-Client.jar
-```
-
-### Problème : Docker non disponible
-
-Sur Windows, assurez-vous que :
-- Docker Desktop est installé et lancé
-- La virtualisation est activée dans le BIOS
-- WSL2 est installé et configuré
-
-## 📞 Support
-
-En cas de problème :
-1. Consulter les logs dans `logs/`
-2. Vérifier la configuration `.env`
-3. Contacter l'équipe de développement
