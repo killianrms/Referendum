@@ -2,11 +2,10 @@
 
 ## 📋 Table des matières
 
-1. [Prérequis](#prérequis)
-2. [Installation du Serveur](#installation-du-serveur)
-3. [Installation du Client/Admin](#installation-du-clientadmin)
-4. [Installation du Scrutateur](#installation-du-scrutateur)
-5. [Dépannage](#dépannage)
+1. [Prérequis](#-prérequis)
+2. [Installation du Serveur](#-installation-du-serveur---projet-referendum_serveur)
+3. [Installation du Client/Admin](#-installation-du-clientadmin---projet-referendum_client)
+4. [Installation du Scrutateur](#-installation-du-scrutateur---projet-referendum_scrutateur)
 
 ## 🔧 Prérequis
 
