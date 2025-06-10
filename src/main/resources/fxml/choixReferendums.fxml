@@ -59,7 +59,7 @@
             <HBox fx:id="hboxBas" alignment="CENTER" spacing="15.0" style="-fx-padding: 15;">
                 <children>
                     <Button fx:id="buttonFAQ" mnemonicParsing="false" text="❓ FAQ / Aide" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 20; -fx-font-weight: bold; -fx-cursor: hand;" />
-                    <Button fx:id="buttonCGU" mnemonicParsing="false" text="📄 CGU" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 20; -fx-font-weight: bold; -fx-cursor: hand;" />
+                    <Button fx:id="buttonCGU" mnemonicParsing="false" text="🛡 CGU" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 20; -fx-font-weight: bold; -fx-cursor: hand;" />
                     <Button fx:id="buttonML" mnemonicParsing="false" text="⚖ Mentions Légales" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 20; -fx-font-weight: bold; -fx-cursor: hand;" />
                 </children>
             </HBox>
